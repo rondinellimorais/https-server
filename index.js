@@ -9,11 +9,11 @@ var fs = require('fs')
 
 // === constants
 // ==================================================
-const SERVER_PORT = 443
+const PORT = process.env.PORT || 443
 
 // === configuration
 // ==================================================
-app.set('port', process.env.PORT || SERVER_PORT)
+app.set('port', PORT)
 app.use(express.static(path.join(__dirname, 'www')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -29,7 +29,7 @@ app.get("/status", function (req, res) {
 https.createServer({
   key: fs.readFileSync('ssl/rondinellimorais.local.key', 'utf8'),
   cert: fs.readFileSync('ssl/rondinellimorais.local.crt', 'utf8')
-}, app).listen(SERVER_PORT, () => {
-  console.log('[' + (new Date().toString()) + '] Server is running...')
+}, app).listen(PORT, () => {
+  console.log(`[${new Date().toString()}] Server is running on ${PORT}...`)
   console.log("---------------\n")
 })
